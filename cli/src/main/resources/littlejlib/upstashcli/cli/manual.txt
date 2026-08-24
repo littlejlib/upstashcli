@@ -120,6 +120,11 @@ VERBS
     grep <regex> [--streams ...] [--context N] [-i]        search the recording
     sessions [--limit N]                                   sessions this node has recorded
 
+  The rendezvous this machine uses
+    relay show [--reveal]                                  what is configured; masked unless asked
+    relay set --from <file|->                              point it at one; a file, never a flag
+    relay clear [--yes]                                    forget it - this machine goes local-only
+
   Control (host side)
     lock [--off]                                           stop the remote end doing anything
     view-only [--off]                                      let it watch but not type
@@ -182,6 +187,12 @@ FILES
                                           largeFileExchangeDir, largeFileThresholdBytes, appJar
   ~/littlejlib/upstashcli/db/            one recording store per node
   ~/littlejlib/upstashcli/run/           node ports, local session endpoints, node logs
+
+  "relay set --from <file>" is the way to change the rendezvous, and it takes a FILE on purpose:
+  a token given as a command-line argument is in the shell history and in any agent transcript of
+  that shell for good. "relay show" tells you what is configured without printing it, and
+  "relay clear --yes" makes a machine local-only again - which is what to run on a machine you are
+  handing back or decommissioning.
 
   A Windows path in settings.toml goes in SINGLE quotes - largeFileExchangeDir = 'C:\some\folder'.
   In double quotes every backslash is an escape and the file will not parse, which stops every node

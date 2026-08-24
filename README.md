@@ -66,7 +66,23 @@ Only needed for sessions that cross machines. Put the values from the Upstash co
 
 Windows paths in that file go in **single** quotes — `largeFileExchangeDir = 'C:\some\folder'`. In double quotes TOML treats each backslash as an escape, the file fails to parse, and every node then refuses to start.
 
-Nothing secret is compiled into the jars, and a local session reads no credentials at all.
+Nothing secret is compiled into the jars, and a local session reads no credentials at all. Verified rather than assumed: the three credential fields in `Settings` carry no defaults, and a scan of both shaded jars finds the key NAMES only.
+
+`upstashcli relay` is the one-command way to see or change this, so that rotating a credential is something you can ask a person to do rather than talking them through editing TOML:
+
+```
+upstashcli relay show               what is configured, masked; --reveal for the real values
+upstashcli relay set --from f.txt   point this machine at a rendezvous ( - reads stdin )
+upstashcli relay clear --yes        forget it; this machine becomes local-only
+```
+
+`set` takes a file and there is deliberately **no** option that takes a token as an argument: a secret on a command line lands in shell history and in any agent transcript of that shell, permanently, where nobody thinks to look for it. The parser is forgiving about what you paste -- console lines, a whole `settings.toml`, either quoting style, `=` or `:` -- because the input is a human copying between two windows.
+
+### How a distributed copy gets its credentials
+
+The distribution folder ships with `settings.toml` already filled in, and `SettingsStore` seeds the home copy from the one beside the jar on first run. So the person at the other end configures nothing. **That zip is therefore the one artifact that carries live credentials** -- it is never published, never attached to a release, and hand-carried only. `dist/` and `settings.toml` are both gitignored, the latter by name as well as by location, because the file is read from beside whatever jar is running and the next copy of it will appear somewhere nobody predicted.
+
+The credential is shared by every machine that folder reached, so it is worth keeping the account used for distributed copies separate from the one your own machines use: then losing a laptop means rotating the field credential and re-shipping, without moving your own setup. `relay set` is what makes that re-pointing a single step at the far end.
 
 ## Security
 
