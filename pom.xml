@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>io.github.littlejlib</groupId>
+    <artifactId>littlejlib-upstashcli</artifactId>
+    <version>0.1</version>
+    <packaging>pom</packaging>
+
+    <description>upstashcli - remote shell co-driving over an Upstash Redis rendezvous. Both ends dial out, so it crosses NAT without inbound ports or admin rights. One shared terminal two humans can watch and type into, plus a CLI surface so an agent can drive the far end.</description>
+
+    <modules>
+        <module>relay</module>
+        <module>record</module>
+        <module>node</module>
+        <module>app</module>
+        <module>cli</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>25</maven.compiler.release>
+        <lettuce.version>7.7.0.RELEASE</lettuce.version>
+        <jackson.version>2.21.2</jackson.version>
+        <datahelper.version>1.0</datahelper.version>
+        <arcade.datahelper.version>1.4</arcade.datahelper.version>
+        <arcadedb.version>26.7.3</arcadedb.version>
+        <gson.version>2.14.0</gson.version>
+        <picocli.version>4.7.7</picocli.version>
+        <slf4j.version>2.0.18</slf4j.version>
+        <!-- jeditermfx 1.1.0 is the released one on Central; it was built against JavaFX 19 and
+             pty4j 0.12.25. pty4j is pinned to that same 0.12.25 rather than the newer 0.13.x so
+             there is one native pty binding in the tree, not two. JavaFX is taken to 25 to match
+             the JDK; drop to 21 if the terminal widget turns out to touch something removed. -->
+        <jeditermfx.version>1.1.0</jeditermfx.version>
+        <luvjfx.version>1.0-SNAPSHOT</luvjfx.version>
+        <pty4j.version>0.12.25</pty4j.version>
+        <javafx.version>25.0.4</javafx.version>
+        <junit.version>5.11.4</junit.version>
+        <surefire.version>3.5.4</surefire.version>
+        <compiler.plugin.version>3.14.0</compiler.plugin.version>
+        <shade.plugin.version>3.6.0</shade.plugin.version>
+    </properties>
+
+    <!-- pty4j pulls org.jetbrains.pty4j:purejavacomm, which is not on Maven Central. jeditermfx's
+         own pom declares the same repository for the same reason. -->
+    <repositories>
+        <repository>
+            <id>jetbrains-intellij-dependencies</id>
+            <url>https://packages.jetbrains.team/maven/p/ij/intellij-dependencies</url>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.github.littlejlib</groupId>
+                <artifactId>littlejlib-upstashcli-relay</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.littlejlib</groupId>
+                <artifactId>littlejlib-upstashcli-record</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.littlejlib</groupId>
+                <artifactId>littlejlib-upstashcli-node</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.xyz-jphil</groupId>
+                <artifactId>xyz-jphil-arcadedb-datahelper</artifactId>
+                <version>${arcade.datahelper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.arcadedb</groupId>
+                <artifactId>arcadedb-engine</artifactId>
+                <version>${arcadedb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.techsenger.jeditermfx</groupId>
+                <artifactId>jeditermfx-core</artifactId>
+                <version>${jeditermfx.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.techsenger.jeditermfx</groupId>
+                <artifactId>jeditermfx-ui</artifactId>
+                <version>${jeditermfx.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.lettuce</groupId>
+                <artifactId>lettuce-core</artifactId>
+                <version>${lettuce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-toml</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.xyz-jphil</groupId>
+                <artifactId>xyz-jphil-datahelper-base</artifactId>
+                <version>${datahelper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.xyz-jphil</groupId>
+                <artifactId>xyz-jphil-datahelper-annotations</artifactId>
+                <version>${datahelper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.xyz-jphil</groupId>
+                <artifactId>xyz-jphil-datahelper-json</artifactId>
+                <version>${datahelper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>info.picocli</groupId>
+                <artifactId>picocli</artifactId>
+                <version>${picocli.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${compiler.plugin.version}</version>
+                    <configuration>
+                        <release>${maven.compiler.release}</release>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>io.github.xyz-jphil</groupId>
+                                <artifactId>xyz-jphil-datahelper-processor</artifactId>
+                                <version>${datahelper.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefire.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${shade.plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

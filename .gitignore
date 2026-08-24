@@ -1,0 +1,34 @@
+# Build output
+target/
+shade/
+dist/
+*.aot
+*.aot.config
+
+# Credentials. dist/ is where the seeded copy lives and is already ignored, but ignore this by
+# NAME as well: the file is read from beside whatever jar is running, so the next copy of it will
+# appear somewhere nobody predicted, and a location-only rule does not cover that.
+settings.toml
+**/settings.toml
+
+# PRPs and conversation logs: real ids, real paths, internal reasoning
+prp/
+.claude/
+CLAUDE.md
+
+# Runtime state. "*.log" does NOT cover these - ArcadeDB writes arcadedb.log.0, .log.0.1,
+# .log.0.1.corrupted.bak and .lck, whose extensions are not "log" at all.
+log/
+run/
+*.log
+*.lck
+*.corrupted.bak
+hs_err_pid*
+replay_pid*
+
+# Other credential shapes
+credentials.json
+*.key
+*.pem
+*.p12
+.env

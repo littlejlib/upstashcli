@@ -1,0 +1,248 @@
+.root {
+    -ucli-bg: #14182B;
+    -ucli-panel: #1B2038;
+    -ucli-panel-2: #232A47;
+    -ucli-edge: #313A5E;
+    -ucli-text: #E8EAF2;
+    -ucli-muted: #8E97B6;
+    -ucli-green: #3FD68C;
+    -ucli-amber: #F2A93B;
+    -ucli-cyan: #48C7E8;
+    -ucli-red: #E4574C;
+    -fx-background-color: -ucli-bg;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 12.5px;
+}
+
+.bar {
+    -fx-background-color: -ucli-panel;
+    -fx-border-color: transparent transparent -ucli-edge transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 6 10 6 10;
+    -fx-spacing: 10;
+    -fx-alignment: center-left;
+}
+
+.legend {
+    -fx-background-color: -ucli-panel;
+    -fx-border-color: -ucli-edge transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 4 10 4 10;
+    -fx-spacing: 14;
+    -fx-alignment: center-left;
+}
+
+.legend .label {
+    -fx-text-fill: -ucli-muted;
+    -fx-font-size: 11px;
+}
+
+.legend .key {
+    -fx-text-fill: -ucli-green;
+    -fx-font-family: "Consolas", monospace;
+}
+
+.label {
+    -fx-text-fill: -ucli-text;
+}
+
+.muted {
+    -fx-text-fill: -ucli-muted;
+}
+
+.title {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -ucli-text;
+}
+
+.subtitle {
+    -fx-text-fill: -ucli-muted;
+    -fx-font-size: 12px;
+}
+
+.mono {
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-font-size: 15px;
+    -fx-text-fill: -ucli-green;
+}
+
+.pill {
+    -fx-background-color: -ucli-panel-2;
+    -fx-background-radius: 10;
+    -fx-padding: 2 9 2 9;
+    -fx-text-fill: -ucli-muted;
+    -fx-font-size: 11px;
+}
+
+.pill-live {
+    -fx-background-color: #14402C;
+    -fx-text-fill: -ucli-green;
+}
+
+.pill-wait {
+    -fx-background-color: #40331A;
+    -fx-text-fill: -ucli-amber;
+}
+
+.pill-locked {
+    -fx-background-color: #41211E;
+    -fx-text-fill: -ucli-red;
+}
+
+.pill-view {
+    -fx-background-color: #16394A;
+    -fx-text-fill: -ucli-cyan;
+}
+
+.button {
+    -fx-background-color: -ucli-panel-2;
+    -fx-text-fill: -ucli-text;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-border-color: -ucli-edge;
+    -fx-border-width: 1;
+    -fx-padding: 4 11 4 11;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #2C3459;
+}
+
+.button:focused {
+    -fx-border-color: -ucli-green;
+}
+
+.button:disabled {
+    -fx-opacity: 0.45;
+}
+
+.button.danger:hover {
+    -fx-background-color: #4A2320;
+}
+
+.button.primary {
+    -fx-background-color: #1F4E3A;
+    -fx-border-color: -ucli-green;
+}
+
+.button.primary:hover {
+    -fx-background-color: #266046;
+}
+
+.text-field, .password-field {
+    -fx-background-color: #0F1324;
+    -fx-text-fill: -ucli-text;
+    -fx-prompt-text-fill: #5C6588;
+    -fx-background-radius: 4;
+    -fx-border-color: -ucli-edge;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-padding: 5 8 5 8;
+    -fx-font-family: "Consolas", monospace;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: -ucli-green;
+}
+
+.combo-box {
+    -fx-background-color: #0F1324;
+    -fx-border-color: -ucli-edge;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: -ucli-text;
+    -fx-background-color: transparent;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: -ucli-panel-2;
+    -fx-border-color: -ucli-edge;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #2C3459;
+}
+
+.list-view {
+    -fx-background-color: -ucli-bg;
+    -fx-border-color: -ucli-edge;
+    -fx-border-width: 1;
+    -fx-background-insets: 0;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: -ucli-text;
+    -fx-padding: 7 10 7 10;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #232A47;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #1F4E3A;
+}
+
+.card-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: -ucli-text;
+}
+
+.card-detail {
+    -fx-text-fill: -ucli-muted;
+    -fx-font-size: 11px;
+}
+
+.separator .line {
+    -fx-border-color: -ucli-edge;
+}
+
+.scroll-pane, .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* The activity log: the tool's own voice, kept off the terminal's stream. Muted on purpose -
+   it is there to be glanced at, and the shell above it is the thing being read. */
+.log {
+    -fx-control-inner-background: -ucli-panel;
+    -fx-background-color: -ucli-panel;
+    -fx-text-fill: -ucli-muted;
+    -fx-font-family: "Cascadia Mono", "Consolas", monospace;
+    -fx-font-size: 11.5px;
+    -fx-highlight-fill: -ucli-panel-2;
+    -fx-border-color: -ucli-edge transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+}
+
+.log .content {
+    -fx-background-color: -ucli-panel;
+}
+
+.legend .hint {
+    -fx-text-fill: -ucli-amber;
+}
+
+/* Enough unread activity that a grey aside understates it. Same amber, but bold and brighter:
+   a person watching the terminal has no other cue that the tool is doing anything. */
+.legend .hint-loud {
+    -fx-text-fill: -ucli-amber;
+    -fx-font-weight: bold;
+}
+
+.split-pane {
+    -fx-background-color: -ucli-bg;
+    -fx-padding: 0;
+}
+
+.split-pane > .split-pane-divider {
+    -fx-background-color: -ucli-edge;
+    -fx-padding: 0;
+    -fx-pref-height: 3;
+}
