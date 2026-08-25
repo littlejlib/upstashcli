@@ -20,15 +20,27 @@ prompt and type:
 
 Everything else is already inside the two .jar files here, including the window toolkit
 and the terminal support. There is nothing to install, and nothing needs an
-administrator. The folder can be copied anywhere - the launchers find the jars beside
-themselves.
+administrator. The folder can be copied anywhere; run install.cmd again afterwards so the
+programs know where it went.
+
+
+INSTALL IT FIRST
+
+Double-click       install.cmd
+
+It takes a couple of seconds. It points the two programs at the files beside them and
+puts this folder on your PATH, so that "upstashcli" works as a command from anywhere.
+It needs no administrator and changes nothing else on the machine. It also puts an
+upstashcli shortcut on your desktop.
+
+If you skip this step the window still works when double-clicked from this folder, but
+the command line will not work from anywhere else.
 
 
 START IT
 
-Double-click       upstashcliapp.exe
-
-That is the one to run. A window opens and offers to share this machine.
+Double-click the upstashcli shortcut on your desktop, or upstashcliapp.exe in this
+folder. A window opens and offers to share this machine.
 
 
 BEFORE THE FIRST TIME: CONNECT IT TO A RELAY
@@ -141,6 +153,7 @@ The other person says the invite does not work:
 
 THE TWO PROGRAMS IN THIS FOLDER
 
+    install.cmd          run this once, first.
     upstashcliapp.exe    the window. This is the one to double-click.
     upstashcli.exe       the command line. Not needed to share this machine; it is here
                          so the relay can be changed without editing files by hand, and

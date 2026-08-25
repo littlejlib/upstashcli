@@ -48,6 +48,8 @@ Copy-Item $jrExe (Join-Path $stage 'upstashcli.exe')
 Copy-Item (Join-Path $root 'pkg\upstashcliapp.jrc') $stage
 Copy-Item (Join-Path $root 'pkg\upstashcli.jrc') $stage
 Copy-Item (Join-Path $root 'pkg\README.txt') $stage
+Copy-Item (Join-Path $root 'pkg\install.cmd') $stage
+Copy-Item (Join-Path $root 'pkg\install.ps1') $stage
 Copy-Item (Join-Path $root 'pkg\settings.toml.template') (Join-Path $stage 'settings.toml')
 Copy-Item $appJar $stage
 Copy-Item $cliJar $stage
