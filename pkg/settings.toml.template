@@ -1,0 +1,25 @@
+# upstashcli settings.
+#
+# This file is copied to %USERPROFILE%\littlejlib\upstashcli\ the first time the app runs, and is
+# read and written THERE afterwards - editing this copy again later changes nothing.
+#
+# It ships with the three credential lines EMPTY on purpose. With them empty, everything on this
+# machine works and nothing is announced anywhere off it. To be reachable from somewhere else, open
+# the app and press F5 (Relay setup), paste the lines you were sent, and press Save. If you would
+# rather do it from a terminal:  upstashcli relay set --from thefile.txt
+#
+# An empty value is treated as "not set", so leaving them as they are is a valid configuration and
+# not a half-finished one.
+
+REDIS_URL = ""
+UPSTASH_REDIS_REST_URL = ""
+UPSTASH_REDIS_REST_TOKEN = ""
+
+transportPreference = "AUTO"
+defaultShell = "cmd.exe"
+idleTimeoutMinutes = 15
+maxSessionHours = 4
+logRetentionDays = 14
+recordOutput = true
+largeFileThresholdBytes = 262144
+terminalFontSize = 13.5
