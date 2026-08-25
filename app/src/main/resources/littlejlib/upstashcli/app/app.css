@@ -147,6 +147,31 @@
     -fx-border-color: -ucli-green;
 }
 
+/* TextArea had no rule at all and came out stark white against everything else - the one defect
+   a clean compile cannot show you. It needs BOTH of these: the control carries the border, and
+   the inner .content region carries the background, so styling only the outer one leaves a white
+   block sitting inside a dark frame. The viewport is transparent for the same reason. */
+.text-area {
+    -fx-background-color: #0F1324;
+    -fx-text-fill: -ucli-text;
+    -fx-prompt-text-fill: #5C6588;
+    -fx-background-radius: 4;
+    -fx-border-color: -ucli-edge;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-font-family: "Consolas", monospace;
+}
+
+.text-area .content,
+.text-area .scroll-pane,
+.text-area .scroll-pane .viewport {
+    -fx-background-color: #0F1324;
+}
+
+.text-area:focused {
+    -fx-border-color: -ucli-green;
+}
+
 .combo-box {
     -fx-background-color: #0F1324;
     -fx-border-color: -ucli-edge;

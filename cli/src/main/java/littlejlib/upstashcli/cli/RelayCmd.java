@@ -1,6 +1,7 @@
 package littlejlib.upstashcli.cli;
 
 import module java.base;
+import littlejlib.upstashcli.relay.RelayBlob;
 import littlejlib.upstashcli.relay.Settings;
 import littlejlib.upstashcli.relay.SettingsStore;
 import picocli.CommandLine.*;

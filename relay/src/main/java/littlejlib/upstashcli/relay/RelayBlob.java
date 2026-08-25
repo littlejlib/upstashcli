@@ -1,7 +1,7 @@
-package littlejlib.upstashcli.cli;
+package littlejlib.upstashcli.relay;
 
 import module java.base;
-import littlejlib.upstashcli.relay.Settings;
+
 
 /** Pulls the three rendezvous values out of whatever the person actually pasted.
  *  <p>

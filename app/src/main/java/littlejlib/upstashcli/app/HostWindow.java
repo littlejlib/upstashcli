@@ -7,6 +7,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import littlejlib.upstashcli.node.HostSession;
 import littlejlib.upstashcli.relay.Ids;
+import littlejlib.upstashcli.relay.Invite;
 import luvjfx.FxButton;
 import luvjfx.FxLabel;
 
@@ -34,6 +35,7 @@ public final class HostWindow {
     final FxButton viewOnly = button("F3  View only");
     final FxLabel legendTail = label("").styleClass("label");
     final FxLabel logHint = label("").styleClass("label", "hint");
+    final FxLabel flash = label("").styleClass("label", "hint");
     final LogPane log = new LogPane();
     final javafx.scene.control.SplitPane split = new javafx.scene.control.SplitPane();
 
@@ -61,13 +63,15 @@ public final class HostWindow {
                 where, flags);
         bar.node.getChildren().add(Ui.spacer());
         bar.nodes(
+                button("F4  Copy invite").styleClass("primary").onAction(e -> copyInvite()),
                 button("F1  Details").onAction(e -> details()),
                 lock, viewOnly,
                 button("F9  End").styleClass("danger").onAction(e -> endAndClose()));
 
-        var legend = Ui.legend("F4", "copy id", "F5", "copy password", "F6 F7", "font size",
+        var legend = Ui.legend("F4", "copy invite", "F5", "copy id", "F6 F7", "font size",
                 "F8", "clear this view", "F12", "activity log", "F11", "keys to shell");
         legend.add(legendTail);
+        legend.add(flash);
         legend.add(logHint);
 
         split.setOrientation(javafx.geometry.Orientation.VERTICAL);
@@ -78,8 +82,8 @@ public final class HostWindow {
                 KeyCode.F1, this::details,
                 KeyCode.F2, () -> session.locked(!session.locked()),
                 KeyCode.F3, () -> session.viewOnly(!session.viewOnly()),
-                KeyCode.F4, () -> Ui.copy(session.sessionId()),
-                KeyCode.F5, () -> Ui.copy(session.password()),
+                KeyCode.F4, this::copyInvite,
+                KeyCode.F5, () -> Ui.copy(session.sessionId()),
                 KeyCode.F6, () -> Fonts.step(host, view, -TerminalView.FONT_STEP, this::refresh),
                 KeyCode.F7, () -> Fonts.step(host, view, TerminalView.FONT_STEP, this::refresh),
                 KeyCode.F8, view::clear,
@@ -121,6 +125,27 @@ public final class HostWindow {
         view.focus();
     }
 
+    /** One string, because inviting somebody used to be two copies and two pastes and people
+     *  arrived with half of it. Handing both halves over together gives nothing away that was being
+     *  held back: the password authenticates the key exchange rather than guarding entry, and what
+     *  actually admits a viewer is the person at this keyboard being asked to approve them - which
+     *  happens whatever the password did. */
+    void copyInvite() {
+        Ui.copy(Invite.format(session.sessionId(), session.password()));
+        flash(session.localOnly()
+                ? "copied - but this console is local-only, so nobody off this machine can use it"
+                : "invite copied - send it to whoever is joining");
+    }
+
+    /** Copying is otherwise silent, and a button that gives nothing back reads as a broken button.
+     *  It goes in the legend and not the terminal, which carries the shell and nothing else. */
+    void flash(String message) {
+        flash.text(message);
+        var clear = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(4));
+        clear.setOnFinished(e -> flash.text(""));
+        clear.play();
+    }
+
     void details() {
         SessionDetails.show(stage, session.sessionId(), session.password(),
                 host.service().dispatch("status", null).path("transport").asText("unknown"),
@@ -149,7 +174,7 @@ public final class HostWindow {
         if (connected) return "one viewer connected";
         return session.localOnly()
                 ? "this machine only - nothing is announced anywhere"
-                : "read out the id and password to connect";
+                : "press F4 to copy the invite, and send it to whoever is joining";
     }
 
     void endAndClose() {
